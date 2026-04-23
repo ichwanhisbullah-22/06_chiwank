@@ -2,71 +2,141 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Menu Interaktif</title>
+  <title>App Data Modern</title>
 
   <style>
     body {
-      font-family: Arial;
-      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f6f9;
     }
 
-    /* MENU */
+    /* NAVBAR */
     #menu {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       list-style: none;
-      padding: 0;
+      padding: 15px;
+      margin: 0;
+      background: #2c3e50;
     }
 
     #menu li {
-      background: #ddd;
-      padding: 8px 12px;
+      color: white;
+      padding: 8px 15px;
       cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
     }
 
     #menu li:hover {
-      background: #bbb;
+      background: #34495e;
     }
 
-    /* ACTIVE MENU */
     .active {
-      background: #999 !important;
-      color: white;
+      background: #1abc9c !important;
     }
 
     /* CONTENT */
+    .container {
+      padding: 20px;
+    }
+
     .content {
       display: none;
-      margin-top: 20px;
+      animation: fade 0.3s ease;
     }
 
     .show {
       display: block;
     }
 
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARD BOX */
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    /* INPUT */
+    input {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 200px;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      background: #1abc9c;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #16a085;
+    }
+
     /* TABLE */
     table {
+      width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
     }
 
+    th {
+      background: #1abc9c;
+      color: white;
+    }
+
     table, th, td {
-      border: 1px solid black;
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    /* LIST */
+    #list li {
+      background: #ecf0f1;
+      margin: 5px 0;
       padding: 8px;
+      border-radius: 5px;
     }
 
     /* CARD */
     #card {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
       margin-top: 10px;
     }
 
     .card-item {
-      border: 1px solid black;
-      padding: 10px;
-      width: 100px;
+      background: #1abc9c;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      width: 120px;
       text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      margin-top: 0;
     }
   </style>
 </head>
@@ -75,41 +145,63 @@
   <!-- MENU -->
   <ul id="menu"></ul>
 
-  <!-- HOME -->
-  <div id="home" class="content">
-    <h2>Home</h2>
-    <p>Selamat datang di aplikasi sederhana.</p>
-  </div>
+  <div class="container">
 
-  <!-- DATA -->
-  <div id="data" class="content">
-    <h2>Data</h2>
+    <!-- HOME -->
+    <div id="home" class="content box">
+      <h2>🏠 Home</h2>
+      <p>Selamat datang di aplikasi render data modern.</p>
+    </div>
 
-    <input type="text" id="namaInput" placeholder="Masukkan nama">
-    <button onclick="tambahData()">Tambah</button>
+    <!-- DATA -->
+    <div id="data" class="content">
 
-    <h3>Table</h3>
-    <table>
-      <tbody id="tableBody"></tbody>
-    </table>
+      <div class="box">
+        <h2>➕ Tambah Data</h2>
+        <input type="text" id="namaInput" placeholder="Masukkan nama">
+        <button onclick="tambahData()">Tambah</button>
+      </div>
 
-    <h3>List</h3>
-    <ul id="list"></ul>
+      <div class="box">
+        <h3>📊 Table</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nama</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
 
-    <h3>Card</h3>
-    <div id="card"></div>
-  </div>
+      <div class="box">
+        <h3>📋 List</h3>
+        <ul id="list"></ul>
+      </div>
 
-  <!-- ABOUT -->
-  <div id="about" class="content">
-    <h2>About</h2>
-    <p>Ini contoh project render data menggunakan JavaScript.</p>
+      <div class="box">
+        <h3>🧾 Card</h3>
+        <div id="card"></div>
+      </div>
+
+    </div>
+
+    <!-- ABOUT -->
+    <div id="about" class="content box">
+      <h2>ℹ️ About</h2>
+      <p>Aplikasi ini dibuat dengan konsep:</p>
+      <ul>
+        <li>DRY</li>
+        <li>Reuse</li>
+        <li>Modular</li>
+        <li>Scalable</li>
+      </ul>
+    </div>
+
   </div>
 
   <script>
-    // =====================
-    // DATA
-    // =====================
     let users = [
       { id: 1, nama: "Sari" },
       { id: 2, nama: "Dina" },
@@ -118,22 +210,14 @@
 
     const menus = ["home", "data", "about"];
 
-    // =====================
-    // RENDER MENU
-    // =====================
     function renderMenu(data) {
       let html = "";
-
       for (let i = 0; i < data.length; i++) {
         html += `<li onclick="showPage('${data[i]}')" id="menu-${data[i]}">${data[i]}</li>`;
       }
-
       document.getElementById("menu").innerHTML = html;
     }
 
-    // =====================
-    // SHOW PAGE
-    // =====================
     function showPage(page) {
       const contents = document.getElementsByClassName("content");
       for (let i = 0; i < contents.length; i++) {
@@ -142,7 +226,6 @@
 
       document.getElementById(page).classList.add("show");
 
-      // aktif menu
       for (let i = 0; i < menus.length; i++) {
         document.getElementById("menu-" + menus[i]).classList.remove("active");
       }
@@ -150,9 +233,6 @@
       document.getElementById("menu-" + page).classList.add("active");
     }
 
-    // =====================
-    // RENDER DATA
-    // =====================
     function renderAll() {
       renderTable(users);
       renderList(users);
@@ -183,18 +263,11 @@
     function renderCard(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
-        html += `
-          <div class="card-item">
-            <p>${data[i].nama}</p>
-          </div>
-        `;
+        html += `<div class="card-item">${data[i].nama}</div>`;
       }
       document.getElementById("card").innerHTML = html;
     }
 
-    // =====================
-    // TAMBAH DATA
-    // =====================
     function tambahData() {
       const nama = document.getElementById("namaInput").value;
 
@@ -209,16 +282,12 @@
       });
 
       document.getElementById("namaInput").value = "";
-
       renderAll();
     }
 
-    // =====================
-    // INIT
-    // =====================
     renderMenu(menus);
     renderAll();
-    showPage("home"); // default halaman awal
+    showPage("home");
   </script>
 
 </body>
