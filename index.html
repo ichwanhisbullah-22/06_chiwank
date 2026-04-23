@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Render Data Lengkap</title>
+  <title>Menu Interaktif</title>
 
   <style>
     body {
@@ -10,9 +10,38 @@
       padding: 20px;
     }
 
-    input, button {
-      padding: 8px;
-      margin: 5px;
+    /* MENU */
+    #menu {
+      display: flex;
+      gap: 15px;
+      list-style: none;
+      padding: 0;
+    }
+
+    #menu li {
+      background: #ddd;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    #menu li:hover {
+      background: #bbb;
+    }
+
+    /* ACTIVE MENU */
+    .active {
+      background: #999 !important;
+      color: white;
+    }
+
+    /* CONTENT */
+    .content {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .show {
+      display: block;
     }
 
     /* TABLE */
@@ -39,50 +68,47 @@
       width: 100px;
       text-align: center;
     }
-
-    /* MENU */
-    #menu {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-      list-style: none;
-      padding: 0;
-    }
-
-    #menu li {
-      background: #ddd;
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-
-    #menu li:hover {
-      background: #bbb;
-    }
   </style>
 </head>
 <body>
 
-  <h2>Menu</h2>
+  <!-- MENU -->
   <ul id="menu"></ul>
 
-  <h3>Tambah Data</h3>
-  <input type="text" id="namaInput" placeholder="Masukkan nama">
-  <button onclick="tambahData()">Tambah</button>
+  <!-- HOME -->
+  <div id="home" class="content">
+    <h2>Home</h2>
+    <p>Selamat datang di aplikasi sederhana.</p>
+  </div>
 
-  <h3>Table</h3>
-  <table>
-    <tbody id="tableBody"></tbody>
-  </table>
+  <!-- DATA -->
+  <div id="data" class="content">
+    <h2>Data</h2>
 
-  <h3>List</h3>
-  <ul id="list"></ul>
+    <input type="text" id="namaInput" placeholder="Masukkan nama">
+    <button onclick="tambahData()">Tambah</button>
 
-  <h3>Card</h3>
-  <div id="card"></div>
+    <h3>Table</h3>
+    <table>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <h3>List</h3>
+    <ul id="list"></ul>
+
+    <h3>Card</h3>
+    <div id="card"></div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about" class="content">
+    <h2>About</h2>
+    <p>Ini contoh project render data menggunakan JavaScript.</p>
+  </div>
 
   <script>
     // =====================
-    // ARRAY (DATA)
+    // DATA
     // =====================
     let users = [
       { id: 1, nama: "Sari" },
@@ -90,33 +116,49 @@
       { id: 3, nama: "Tina" }
     ];
 
-    // MENU DATA
-    const menus = ["Home", "Data", "About"];
+    const menus = ["home", "data", "about"];
 
     // =====================
-    // RENDER SEMUA (DRY)
+    // RENDER MENU
+    // =====================
+    function renderMenu(data) {
+      let html = "";
+
+      for (let i = 0; i < data.length; i++) {
+        html += `<li onclick="showPage('${data[i]}')" id="menu-${data[i]}">${data[i]}</li>`;
+      }
+
+      document.getElementById("menu").innerHTML = html;
+    }
+
+    // =====================
+    // SHOW PAGE
+    // =====================
+    function showPage(page) {
+      const contents = document.getElementsByClassName("content");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("show");
+      }
+
+      document.getElementById(page).classList.add("show");
+
+      // aktif menu
+      for (let i = 0; i < menus.length; i++) {
+        document.getElementById("menu-" + menus[i]).classList.remove("active");
+      }
+
+      document.getElementById("menu-" + page).classList.add("active");
+    }
+
+    // =====================
+    // RENDER DATA
     // =====================
     function renderAll() {
-      renderMenu(menus);
       renderTable(users);
       renderList(users);
       renderCard(users);
     }
 
-    // =====================
-    // MENU
-    // =====================
-    function renderMenu(data) {
-      let html = "";
-      for (let i = 0; i < data.length; i++) {
-        html += `<li>${data[i]}</li>`;
-      }
-      document.getElementById("menu").innerHTML = html;
-    }
-
-    // =====================
-    // TABLE
-    // =====================
     function renderTable(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
@@ -130,9 +172,6 @@
       document.getElementById("tableBody").innerHTML = html;
     }
 
-    // =====================
-    // LIST
-    // =====================
     function renderList(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
@@ -141,9 +180,6 @@
       document.getElementById("list").innerHTML = html;
     }
 
-    // =====================
-    // CARD
-    // =====================
     function renderCard(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
@@ -167,12 +203,10 @@
         return;
       }
 
-      const newUser = {
+      users.push({
         id: users.length + 1,
         nama: nama
-      };
-
-      users.push(newUser);
+      });
 
       document.getElementById("namaInput").value = "";
 
@@ -182,7 +216,9 @@
     // =====================
     // INIT
     // =====================
+    renderMenu(menus);
     renderAll();
+    showPage("home"); // default halaman awal
   </script>
 
 </body>
