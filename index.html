@@ -10,9 +10,14 @@
       padding: 20px;
     }
 
+    input, button {
+      padding: 8px;
+      margin: 5px;
+    }
+
     table {
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin-top: 20px;
     }
 
     table, th, td {
@@ -36,6 +41,10 @@
 </head>
 <body>
 
+  <h3>Tambah Data</h3>
+  <input type="text" id="namaInput" placeholder="Masukkan nama">
+  <button onclick="tambahData()">Tambah</button>
+
   <h3>Table</h3>
   <table>
     <tbody id="tableBody"></tbody>
@@ -48,14 +57,27 @@
   <div id="card"></div>
 
   <script>
-    // DATA (JSON / ARRAY)
-    const users = [
+    // =====================
+    // DATA
+    // =====================
+    let users = [
       { id: 1, nama: "Sari" },
       { id: 2, nama: "Dina" },
       { id: 3, nama: "Tina" }
     ];
 
+    // =====================
+    // RENDER SEMUA (DRY)
+    // =====================
+    function renderAll() {
+      renderTable(users);
+      renderList(users);
+      renderCard(users);
+    }
+
+    // =====================
     // TABLE
+    // =====================
     function renderTable(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
@@ -69,7 +91,9 @@
       document.getElementById("tableBody").innerHTML = html;
     }
 
-    // LIST (INI YANG KURANG)
+    // =====================
+    // LIST
+    // =====================
     function renderList(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
@@ -78,7 +102,9 @@
       document.getElementById("list").innerHTML = html;
     }
 
+    // =====================
     // CARD
+    // =====================
     function renderCard(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
@@ -91,10 +117,33 @@
       document.getElementById("card").innerHTML = html;
     }
 
-    // JALANKAN
-    renderTable(users);
-    renderList(users); // ⬅️ tambahan penting
-    renderCard(users);
+    // =====================
+    // TAMBAH DATA (FITUR BARU)
+    // =====================
+    function tambahData() {
+      const nama = document.getElementById("namaInput").value;
+
+      if (nama === "") {
+        alert("Nama tidak boleh kosong!");
+        return;
+      }
+
+      const newUser = {
+        id: users.length + 1,
+        nama: nama
+      };
+
+      users.push(newUser);
+
+      document.getElementById("namaInput").value = "";
+
+      renderAll(); // update semua tampilan
+    }
+
+    // =====================
+    // INIT
+    // =====================
+    renderAll();
 
   </script>
 
