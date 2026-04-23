@@ -12,8 +12,7 @@
 
     table {
       border-collapse: collapse;
-      margin-bottom: 30px;
-      width: 300px;
+      margin-bottom: 20px;
     }
 
     table, th, td {
@@ -24,6 +23,7 @@
     #card {
       display: flex;
       gap: 10px;
+      margin-top: 20px;
     }
 
     .card-item {
@@ -36,36 +36,28 @@
 </head>
 <body>
 
-  <h2>Table Data</h2>
+  <h3>Table</h3>
   <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nama</th>
-      </tr>
-    </thead>
     <tbody id="tableBody"></tbody>
   </table>
 
-  <h2>Card Data</h2>
+  <h3>List</h3>
+  <ul id="list"></ul>
+
+  <h3>Card</h3>
   <div id="card"></div>
 
   <script>
-    // =====================
-    // DATA (ARRAY)
-    // =====================
+    // DATA (JSON / ARRAY)
     const users = [
       { id: 1, nama: "Sari" },
       { id: 2, nama: "Dina" },
       { id: 3, nama: "Tina" }
     ];
 
-    // =====================
-    // RENDER TABLE
-    // =====================
+    // TABLE
     function renderTable(data) {
       let html = "";
-
       for (let i = 0; i < data.length; i++) {
         html += `
           <tr>
@@ -74,32 +66,34 @@
           </tr>
         `;
       }
-
       document.getElementById("tableBody").innerHTML = html;
     }
 
-    // =====================
-    // RENDER CARD
-    // =====================
+    // LIST (INI YANG KURANG)
+    function renderList(data) {
+      let html = "";
+      for (let i = 0; i < data.length; i++) {
+        html += `<li>${data[i].nama}</li>`;
+      }
+      document.getElementById("list").innerHTML = html;
+    }
+
+    // CARD
     function renderCard(data) {
       let html = "";
-
       for (let i = 0; i < data.length; i++) {
         html += `
           <div class="card-item">
-            <p>ID: ${data[i].id}</p>
             <p>${data[i].nama}</p>
           </div>
         `;
       }
-
       document.getElementById("card").innerHTML = html;
     }
 
-    // =====================
     // JALANKAN
-    // =====================
     renderTable(users);
+    renderList(users); // ⬅️ tambahan penting
     renderCard(users);
 
   </script>
