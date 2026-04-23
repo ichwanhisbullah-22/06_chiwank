@@ -50,6 +50,59 @@
   <h2>Card Data</h2>
   <div id="card"></div>
 
-  <script src="script.js"></script>
+  <script>
+    // =====================
+    // DATA (ARRAY)
+    // =====================
+    const users = [
+      { id: 1, nama: "Sari" },
+      { id: 2, nama: "Dina" },
+      { id: 3, nama: "Tina" }
+    ];
+
+    // =====================
+    // RENDER TABLE
+    // =====================
+    function renderTable(data) {
+      let html = "";
+
+      for (let i = 0; i < data.length; i++) {
+        html += `
+          <tr>
+            <td>${data[i].id}</td>
+            <td>${data[i].nama}</td>
+          </tr>
+        `;
+      }
+
+      document.getElementById("tableBody").innerHTML = html;
+    }
+
+    // =====================
+    // RENDER CARD
+    // =====================
+    function renderCard(data) {
+      let html = "";
+
+      for (let i = 0; i < data.length; i++) {
+        html += `
+          <div class="card-item">
+            <p>ID: ${data[i].id}</p>
+            <p>${data[i].nama}</p>
+          </div>
+        `;
+      }
+
+      document.getElementById("card").innerHTML = html;
+    }
+
+    // =====================
+    // JALANKAN
+    // =====================
+    renderTable(users);
+    renderCard(users);
+
+  </script>
+
 </body>
 </html>
