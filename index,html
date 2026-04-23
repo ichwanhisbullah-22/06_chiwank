@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Render Data</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      width: 300px;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+
+    #card {
+      display: flex;
+      gap: 10px;
+    }
+
+    .card-item {
+      border: 1px solid black;
+      padding: 10px;
+      width: 100px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Table Data</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nama</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <h2>Card Data</h2>
+  <div id="card"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
