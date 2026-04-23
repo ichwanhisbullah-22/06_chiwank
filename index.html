@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>App Data Modern</title>
+  <title>App Data Final</title>
 
   <style>
     body {
@@ -26,7 +26,6 @@
       padding: 8px 15px;
       cursor: pointer;
       border-radius: 5px;
-      transition: 0.3s;
     }
 
     #menu li:hover {
@@ -44,19 +43,12 @@
 
     .content {
       display: none;
-      animation: fade 0.3s ease;
     }
 
     .show {
       display: block;
     }
 
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* CARD BOX */
     .box {
       background: white;
       padding: 20px;
@@ -65,33 +57,28 @@
       margin-bottom: 20px;
     }
 
-    /* INPUT */
     input {
       padding: 10px;
       border-radius: 5px;
       border: 1px solid #ccc;
-      width: 200px;
     }
 
     button {
-      padding: 10px 15px;
+      padding: 8px 12px;
       border: none;
       background: #1abc9c;
       color: white;
       border-radius: 5px;
       cursor: pointer;
-      transition: 0.3s;
     }
 
     button:hover {
       background: #16a085;
     }
 
-    /* TABLE */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
     }
 
     th {
@@ -102,14 +89,8 @@
     table, th, td {
       border: 1px solid #ddd;
       padding: 10px;
-      text-align: left;
     }
 
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
-
-    /* LIST */
     #list li {
       background: #ecf0f1;
       margin: 5px 0;
@@ -117,26 +98,24 @@
       border-radius: 5px;
     }
 
-    /* CARD */
     #card {
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
-      margin-top: 10px;
+      flex-wrap: wrap;
     }
 
     .card-item {
       background: #1abc9c;
       color: white;
-      padding: 15px;
+      padding: 10px;
       border-radius: 10px;
       width: 120px;
       text-align: center;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
 
-    h2 {
-      margin-top: 0;
+    .card-item button {
+      margin-top: 5px;
+      background: red;
     }
   </style>
 </head>
@@ -149,26 +128,27 @@
 
     <!-- HOME -->
     <div id="home" class="content box">
-      <h2>🏠 Home</h2>
-      <p>Selamat datang di aplikasi render data modern.</p>
+      <h2>Home</h2>
+      <p>Selamat datang di aplikasi render data.</p>
     </div>
 
     <!-- DATA -->
     <div id="data" class="content">
 
       <div class="box">
-        <h2>➕ Tambah Data</h2>
+        <h2>Tambah Data</h2>
         <input type="text" id="namaInput" placeholder="Masukkan nama">
         <button onclick="tambahData()">Tambah</button>
       </div>
 
       <div class="box">
-        <h3>📊 Table</h3>
+        <h3>Table</h3>
         <table>
           <thead>
             <tr>
               <th>ID</th>
               <th>Nama</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -176,12 +156,12 @@
       </div>
 
       <div class="box">
-        <h3>📋 List</h3>
+        <h3>List</h3>
         <ul id="list"></ul>
       </div>
 
       <div class="box">
-        <h3>🧾 Card</h3>
+        <h3>Card</h3>
         <div id="card"></div>
       </div>
 
@@ -189,8 +169,8 @@
 
     <!-- ABOUT -->
     <div id="about" class="content box">
-      <h2>ℹ️ About</h2>
-      <p>Aplikasi ini dibuat dengan konsep:</p>
+      <h2>About</h2>
+      <p>Aplikasi ini menggunakan konsep:</p>
       <ul>
         <li>DRY</li>
         <li>Reuse</li>
@@ -202,6 +182,7 @@
   </div>
 
   <script>
+    // DATA
     let users = [
       { id: 1, nama: "Sari" },
       { id: 2, nama: "Dina" },
@@ -210,6 +191,7 @@
 
     const menus = ["home", "data", "about"];
 
+    // MENU
     function renderMenu(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
@@ -233,6 +215,7 @@
       document.getElementById("menu-" + page).classList.add("active");
     }
 
+    // RENDER
     function renderAll() {
       renderTable(users);
       renderList(users);
@@ -246,6 +229,9 @@
           <tr>
             <td>${data[i].id}</td>
             <td>${data[i].nama}</td>
+            <td>
+              <button onclick="hapusData(${data[i].id})">Hapus</button>
+            </td>
           </tr>
         `;
       }
@@ -263,11 +249,18 @@
     function renderCard(data) {
       let html = "";
       for (let i = 0; i < data.length; i++) {
-        html += `<div class="card-item">${data[i].nama}</div>`;
+        html += `
+          <div class="card-item">
+            ${data[i].nama}
+            <br>
+            <button onclick="hapusData(${data[i].id})">Hapus</button>
+          </div>
+        `;
       }
       document.getElementById("card").innerHTML = html;
     }
 
+    // TAMBAH
     function tambahData() {
       const nama = document.getElementById("namaInput").value;
 
@@ -285,6 +278,15 @@
       renderAll();
     }
 
+    // HAPUS
+    function hapusData(id) {
+      if (confirm("Yakin hapus data?")) {
+        users = users.filter(user => user.id !== id);
+        renderAll();
+      }
+    }
+
+    // INIT
     renderMenu(menus);
     renderAll();
     showPage("home");
