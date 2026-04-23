@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Render Data</title>
+  <title>Render Data Lengkap</title>
 
   <style>
     body {
@@ -15,9 +15,10 @@
       margin: 5px;
     }
 
+    /* TABLE */
     table {
       border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
     table, th, td {
@@ -25,10 +26,11 @@
       padding: 8px;
     }
 
+    /* CARD */
     #card {
       display: flex;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
     .card-item {
@@ -37,9 +39,31 @@
       width: 100px;
       text-align: center;
     }
+
+    /* MENU */
+    #menu {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      list-style: none;
+      padding: 0;
+    }
+
+    #menu li {
+      background: #ddd;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    #menu li:hover {
+      background: #bbb;
+    }
   </style>
 </head>
 <body>
+
+  <h2>Menu</h2>
+  <ul id="menu"></ul>
 
   <h3>Tambah Data</h3>
   <input type="text" id="namaInput" placeholder="Masukkan nama">
@@ -58,7 +82,7 @@
 
   <script>
     // =====================
-    // DATA
+    // ARRAY (DATA)
     // =====================
     let users = [
       { id: 1, nama: "Sari" },
@@ -66,13 +90,28 @@
       { id: 3, nama: "Tina" }
     ];
 
+    // MENU DATA
+    const menus = ["Home", "Data", "About"];
+
     // =====================
     // RENDER SEMUA (DRY)
     // =====================
     function renderAll() {
+      renderMenu(menus);
       renderTable(users);
       renderList(users);
       renderCard(users);
+    }
+
+    // =====================
+    // MENU
+    // =====================
+    function renderMenu(data) {
+      let html = "";
+      for (let i = 0; i < data.length; i++) {
+        html += `<li>${data[i]}</li>`;
+      }
+      document.getElementById("menu").innerHTML = html;
     }
 
     // =====================
@@ -118,7 +157,7 @@
     }
 
     // =====================
-    // TAMBAH DATA (FITUR BARU)
+    // TAMBAH DATA
     // =====================
     function tambahData() {
       const nama = document.getElementById("namaInput").value;
@@ -137,14 +176,13 @@
 
       document.getElementById("namaInput").value = "";
 
-      renderAll(); // update semua tampilan
+      renderAll();
     }
 
     // =====================
     // INIT
     // =====================
     renderAll();
-
   </script>
 
 </body>
